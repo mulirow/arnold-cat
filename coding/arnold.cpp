@@ -39,5 +39,5 @@ int main(){
         iterations--;
     }
 
-    cv::imwrite("../images/output/test.png", catImage);
+    cv::imwrite("../images/output/cat-output.png", catImage);
 }
