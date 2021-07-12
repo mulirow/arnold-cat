@@ -35,7 +35,8 @@ int main(){
                 catImage.at<cv::Vec3b>(newY, newX) = temp.at<cv::Vec3b>(y, x);
             }
         }
-
+        cv::imshow("image", catImage);
+        cv::waitKey();
         iterations--;
     }
 
