@@ -5,12 +5,12 @@
 
 int main(){
     cv::Mat catImage = cv::imread("../images/input/cat.png", cv::IMREAD_COLOR);
-    cv::Mat temp, temp2;
+    cv::Mat temp = catImage.clone(), temp2 = catImage.clone();
+
     int lambdaH, lambdaV, iterations;
 
-    catImage.copyTo(temp);
-    catImage.copyTo(temp2);
 
+    //Tranformation works for squared images only, so width = height 
     int height = catImage.rows;
 
     std::cin >> lambdaH >> lambdaV >> iterations;
@@ -35,7 +35,7 @@ int main(){
                 catImage.at<cv::Vec3b>(newY, newX) = temp.at<cv::Vec3b>(y, x);
             }
         }
-        
+
         iterations--;
     }
 
