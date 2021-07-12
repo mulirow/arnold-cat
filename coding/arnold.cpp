@@ -6,6 +6,7 @@
 int main(){
     cv::Mat catImage = cv::imread("../images/input/cat.png", cv::IMREAD_COLOR);
     cv::Mat temp = catImage.clone(), temp2 = catImage.clone();
+    char title[40];
 
     int lambdaH, lambdaV, iterations;
 
@@ -15,7 +16,7 @@ int main(){
 
     std::cin >> lambdaH >> lambdaV >> iterations;
 
-    while(iterations > 0){
+    for(int i = 1; i <= iterations; i++){
         //Horizontal shearing:
         //T(x, y) = (x + lambda * y, y) mod height
         for(int y = 0; y < height; y++){
@@ -35,9 +36,10 @@ int main(){
                 catImage.at<cv::Vec3b>(newY, newX) = temp.at<cv::Vec3b>(y, x);
             }
         }
-        cv::imshow("image", catImage);
+        sprintf(title, "Image after %d iterations", i);
+        cv::imshow(title, catImage);
         cv::waitKey();
-        iterations--;
+        cv::destroyWindow(title);
     }
 
     cv::imwrite("../images/output/cat-output.png", catImage);
