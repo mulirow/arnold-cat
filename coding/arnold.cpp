@@ -6,27 +6,26 @@
 void shearing(int, void*);
 
 int tracker = 0;
-int lambdaH, lambdaV;
+int lambdaH = 1, lambdaV = 1;
 
 int main(){
-    cv::Mat source = cv::imread("../images/input/cat.png", cv::IMREAD_COLOR);
+    cv::Mat source = cv::imread("../images/input/cat-math.png", cv::IMREAD_COLOR);
 
     int iterations;
 
-    //Tranformation works for squared images only, so width = height 
-    int height = source.rows;
-
-    std::cin >> lambdaH >> lambdaV >> iterations;
+    std::cin >> iterations;
 
     cv::imshow("Arnold's Cat", source);
     cv::createTrackbar("Iterations", "Arnold's Cat", &tracker, iterations, shearing);
+    cv::createTrackbar("Horizontal Lambda", "Arnold's Cat", &lambdaH, iterations, shearing);
+    cv::createTrackbar("Vertical Lambda", "Arnold's Cat", &lambdaV, iterations, shearing);
     cv::waitKey();
 
     cv::imwrite("../images/output/cat-output.png", source);
 }
 
 void shearing(int, void*){
-    cv::Mat catImage = cv::imread("../images/input/cat.png", cv::IMREAD_COLOR);
+    cv::Mat catImage = cv::imread("../images/input/cat-math.png", cv::IMREAD_COLOR);
     cv::Mat temp = catImage.clone();
 
     //Tranformation works for squared images only, so width = height 
