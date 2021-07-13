@@ -21,7 +21,6 @@ int main(){
     cv::createTrackbar("Vertical Lambda", "Arnold's Cat", &lambdaV, iterations, shearing);
     cv::waitKey();
 
-    cv::imwrite("../images/output/cat-output.png", source);
 }
 
 void shearing(int, void*){
@@ -31,7 +30,7 @@ void shearing(int, void*){
     //Tranformation works for squared images only, so width = height 
     int height = catImage.rows;
 
-    for(int i = 1; i <= tracker; i++){
+    for(int i = 0; i < tracker; i++){
         //Horizontal shearing:
         //T(x, y) = (x + lambda * y, y) mod height
         for(int y = 0; y < height; y++){
@@ -54,4 +53,5 @@ void shearing(int, void*){
     }
 
     cv::imshow("Arnold's Cat", catImage);
+    cv::imwrite("../images/output/cat-output.png", catImage);
 }
