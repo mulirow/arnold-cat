@@ -52,10 +52,10 @@ void shearing(int, void*){
             }
         }
     }
-    else{
+    else if(prevTracker > tracker){
         for(int i = tracker; i < prevTracker; i++){
-            //Vertical shearing:
-            //T(x, y) = (x, lambda * x + y) mod height
+            //Reverse vertical shearing:
+            //T(x, y) = (x, -lambda * x + y) mod height
             for(int y = 0; y < height; y++){
                 for(int x = 0; x < height; x++){
                     int newX = x % height;
@@ -64,8 +64,8 @@ void shearing(int, void*){
                 }
             }
 
-            //Horizontal shearing:
-            //T(x, y) = (x + lambda * y, y) mod height
+            //Reverse horizontal shearing:
+            //T(x, y) = (x - lambda * y, y) mod height
             for(int y = 0; y < height; y++){
                 for(int x = 0; x < height; x++){
                     int newX = ((x - lambdaH * y) % height + height) % height;
