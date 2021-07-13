@@ -3,20 +3,36 @@
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui.hpp>
 
+void shearing(int, void*);
+
+int tracker = 0;
+int lambdaH, lambdaV;
+
 int main(){
+    cv::Mat source = cv::imread("../images/input/cat.png", cv::IMREAD_COLOR);
+
+    int iterations;
+
+    //Tranformation works for squared images only, so width = height 
+    int height = source.rows;
+
+    std::cin >> lambdaH >> lambdaV >> iterations;
+
+    cv::imshow("Arnold's Cat", source);
+    cv::createTrackbar("Iterations", "Arnold's Cat", &tracker, iterations, shearing);
+    cv::waitKey();
+
+    cv::imwrite("../images/output/cat-output.png", source);
+}
+
+void shearing(int, void*){
     cv::Mat catImage = cv::imread("../images/input/cat.png", cv::IMREAD_COLOR);
-    cv::Mat temp = catImage.clone(), temp2 = catImage.clone();
-    char title[40];
-
-    int lambdaH, lambdaV, iterations;
-
+    cv::Mat temp = catImage.clone();
 
     //Tranformation works for squared images only, so width = height 
     int height = catImage.rows;
 
-    std::cin >> lambdaH >> lambdaV >> iterations;
-
-    for(int i = 1; i <= iterations; i++){
+    for(int i = 1; i <= tracker; i++){
         //Horizontal shearing:
         //T(x, y) = (x + lambda * y, y) mod height
         for(int y = 0; y < height; y++){
@@ -36,11 +52,7 @@ int main(){
                 catImage.at<cv::Vec3b>(newY, newX) = temp.at<cv::Vec3b>(y, x);
             }
         }
-        sprintf(title, "Image after %d iterations", i);
-        cv::imshow(title, catImage);
-        cv::waitKey();
-        cv::destroyWindow(title);
     }
 
-    cv::imwrite("../images/output/cat-output.png", catImage);
+    cv::imshow("Arnold's Cat", catImage);
 }
