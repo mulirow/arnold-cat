@@ -7,8 +7,10 @@ void shearing(int, void*);
 
 int findIterations();
 
+//Change the path of these two lines to modify input image
 cv::Mat source = cv::imread("../images/input/cat-math.png", cv::IMREAD_COLOR);
 cv::Mat catImage = cv::imread("../images/input/cat-math.png", cv::IMREAD_COLOR);
+
 int tracker = 0, prevTracker = 0;
 int lambdaH = 1, lambdaV = 1;
 
@@ -82,37 +84,44 @@ void shearing(int, void*){
     cv::imwrite("../images/output/cat-output.png", catImage);
 }
 
-int findIterations(){
-    cv::Mat temp = catImage.clone();
-    int i = 0;
-    int height = catImage.rows;
-    bool areIdentical = 0;
-
-    while(!areIdentical){
-        //Horizontal shearing:
-        //T(x, y) = (x + lambda * y, y) mod height
-        for(int y = 0; y < height; y++){
-            for(int x = 0; x < height; x++){
-                int newX = (x + lambdaH * y) % height;
-                int newY = y % height;
-                temp.at<cv::Vec3b>(newY, newX) = catImage.at<cv::Vec3b>(y, x);
-            }
-        }
-
-        //Vertical shearing:
-        //T(x, y) = (x, lambda * x + y) mod height
-        for(int y = 0; y < height; y++){
-            for(int x = 0; x < height; x++){
-                int newX = x % height;
-                int newY = (y + lambdaV * x) % height;
-                catImage.at<cv::Vec3b>(newY, newX) = temp.at<cv::Vec3b>(y, x);
-            }
-        }
-
-        i++;
-
-        areIdentical = !cv::norm(catImage, source);
+int gcd(int a, int b){
+    if(b != 0){
+        return gcd(b, a % b);
     }
+    return a;
+}
 
-    return i;
+int lcm(int a, int b){
+    return a * b / gcd(a, b);
+}
+
+//LCM of movement cycle size of all pixels
+//Known the size of the image, its contents can be ignored for this operation
+int findIterations(){
+    int result = 1;
+    int height = catImage.rows;
+    int width = catImage.cols;
+
+    for(int y = 0; y < height; y++){
+        for(int x = 0; x < width; x++){
+            int newX = x, newY = y, pathSize = 0;
+
+            //Shear while pixel position is different from the original
+            while((newX != x) || (newY != y) || (pathSize == 0)){
+                //Horizontal shearing of a single pixel:
+                newX = (newX + lambdaH * newY) % width;
+                newY = newY % height;
+
+                //Vertical shearing of a single pixel:
+                newY = (newY + lambdaV * newX) % height;
+                newX = newX % width;
+
+                pathSize++;
+            }
+            result = lcm(result, pathSize);
+            //std::cout << pathSize << " ";
+        }
+        //std::cout << "\n";
+    }
+    return result;
 }
