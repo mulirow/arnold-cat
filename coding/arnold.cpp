@@ -18,8 +18,8 @@ int main(){
 
     cv::imshow("Arnold's Cat", source);
     cv::createTrackbar("Iterations", "Arnold's Cat", &tracker, iterations, shearing);
-    cv::createTrackbar("Horizontal Lambda", "Arnold's Cat", &lambdaH, iterations, shearing);
-    cv::createTrackbar("Vertical Lambda", "Arnold's Cat", &lambdaV, iterations, shearing);
+    cv::createTrackbar("Horizontal Lambda", "Arnold's Cat", &lambdaH, 10, shearing);
+    cv::createTrackbar("Vertical Lambda", "Arnold's Cat", &lambdaV, 10, shearing);
     cv::waitKey();
 }
 
