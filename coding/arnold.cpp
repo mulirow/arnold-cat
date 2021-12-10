@@ -23,6 +23,7 @@ int main(){
     cv::createTrackbar("Horizontal Lambda", "Arnold's Cat", &lambdaH, 10, shearing);
     cv::createTrackbar("Vertical Lambda", "Arnold's Cat", &lambdaV, 10, shearing);
     cv::waitKey();
+    cv::imwrite("../images/output/cat-output.png", catImage);
 }
 
 void shearing(int, void*){
@@ -81,7 +82,6 @@ void shearing(int, void*){
     prevTracker = tracker;
 
     cv::imshow("Arnold's Cat", catImage);
-    cv::imwrite("../images/output/cat-output.png", catImage);
 }
 
 int gcd(int a, int b){
