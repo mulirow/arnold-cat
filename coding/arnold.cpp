@@ -19,9 +19,10 @@ int main(){
     int iterations = findIterations();
 
     cv::imshow("Arnold's Cat", source);
-    cv::createTrackbar("Iterations", "Arnold's Cat", &tracker, iterations, shearing);
-    cv::createTrackbar("Horizontal Lambda", "Arnold's Cat", &lambdaH, 10, shearing);
-    cv::createTrackbar("Vertical Lambda", "Arnold's Cat", &lambdaV, 10, shearing);
+    cv::namedWindow("Trackbars");
+    cv::createTrackbar("Iterations", "Trackbars", &tracker, iterations, shearing);
+    cv::createTrackbar("Horizontal Lambda", "Trackbars", &lambdaH, 10, shearing);
+    cv::createTrackbar("Vertical Lambda", "Trackbars", &lambdaV, 10, shearing);
     cv::waitKey();
     cv::imwrite("../images/output/cat-output.png", catImage);
 }
