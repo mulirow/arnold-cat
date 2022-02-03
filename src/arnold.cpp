@@ -15,7 +15,6 @@ int tracker = 0, prevTracker = 0;
 int lambdaH = 1, lambdaV = 1;
 
 int main(){
-
     int iterations = findIterations();
 
     cv::imshow("Arnold's Cat", source);
