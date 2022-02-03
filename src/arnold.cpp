@@ -8,8 +8,8 @@ void shearing(int, void*);
 int findIterations();
 
 //Change the path of these two lines to modify input image
-cv::Mat source = cv::imread("../images/input/cat-math.png", cv::IMREAD_COLOR);
-cv::Mat catImage = cv::imread("../images/input/cat-math.png", cv::IMREAD_COLOR);
+cv::Mat source = cv::imread("images/input/cat-math.png", cv::IMREAD_COLOR);
+cv::Mat catImage = cv::imread("images/input/cat-math.png", cv::IMREAD_COLOR);
 
 int tracker = 0, prevTracker = 0;
 int lambdaH = 1, lambdaV = 1;
@@ -24,7 +24,7 @@ int main(){
     cv::createTrackbar("Horizontal Lambda", "Trackbars", &lambdaH, 10, shearing);
     cv::createTrackbar("Vertical Lambda", "Trackbars", &lambdaV, 10, shearing);
     cv::waitKey();
-    cv::imwrite("../images/output/cat-output.png", catImage);
+    cv::imwrite("images/output/cat-output.png", catImage);
 }
 
 void shearing(int, void*){
