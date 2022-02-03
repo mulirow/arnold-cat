@@ -22,7 +22,7 @@ OBJS := $(subst $(SRCDIR)/, , $(patsubst %.$(EXT), %, $(SRCS)))
 all: mkdirs $(OBJS)
 
 %: $(SRCDIR)/%.$(EXT)
-	$(CC) -c $< -o $(OUTPUTDIR)/$@ $(CFLAGS) $(LDLIB)
+	$(CC) $< -o $(OUTPUTDIR)/$@ $(CFLAGS) $(LDLIB)
 
 mkdirs:
 	@mkdir -p $(OUTPUTDIR)
