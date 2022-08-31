@@ -1,4 +1,4 @@
 .vscode
 
 bin/arnold
-images/output
+images/output/*
